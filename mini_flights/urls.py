@@ -16,7 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from mini_flights_app.auth.views import UserViewSet, me
+
+router_user = routers.DefaultRouter()
+router_user.register(r'api/auth/users', UserViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/auth/login', TokenObtainPairView.as_view()),
+    path('api/auth/refresh', TokenRefreshView.as_view()),
+    path('api/auth/me', me)
 ]
+
+urlpatterns.extend(router_user.urls)
+
