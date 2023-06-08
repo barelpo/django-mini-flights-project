@@ -20,9 +20,13 @@ from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from mini_flights_app.auth.views import UserViewSet, me
+from mini_flights_app.flights.views import FlightViewSet
 
 router_user = routers.DefaultRouter()
 router_user.register(r'api/auth/users', UserViewSet)
+
+router_flight = routers.DefaultRouter()
+router_flight.register(r'api/flights', FlightViewSet)
 
 urlpatterns = [
     path('api/auth/login', TokenObtainPairView.as_view()),
@@ -31,4 +35,5 @@ urlpatterns = [
 ]
 
 urlpatterns.extend(router_user.urls)
+urlpatterns.extend(router_flight.urls)
 
